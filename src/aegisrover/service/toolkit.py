@@ -6,7 +6,7 @@ def validate_keys(payload, required, allowed):
     return {'ok': not missing and (not extra), 'missing': missing, 'extra': extra}
 
 def canonical_query(params):
-    return '&'.join((f'{k}={params[k]}' for k in params))
+    return '&'.join((f'{k}={params[k]}' for k in sorted(params)))
 
 def parse_bool(value):
     if isinstance(value, bool):

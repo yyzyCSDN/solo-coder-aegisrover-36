@@ -1,8 +1,9 @@
 import hashlib
-import json
+
+from aegisrover.storage.repository import canonical_json
 
 def request_id(method, path, body):
-    payload = json.dumps(body) if body is not None else ''
+    payload = canonical_json(body) if body is not None else ''
     return hashlib.sha256(f'{method}:{path}:{payload}'.encode()).hexdigest()[:24]
 
 def page_bounds(page, size, total):
