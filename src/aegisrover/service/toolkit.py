@@ -1,4 +1,5 @@
 import json
+from urllib.parse import urlencode
 
 def validate_keys(payload, required, allowed):
     missing = sorted(set(required) - set(payload))
@@ -6,7 +7,8 @@ def validate_keys(payload, required, allowed):
     return {'ok': not missing and (not extra), 'missing': missing, 'extra': extra}
 
 def canonical_query(params):
-    return '&'.join((f'{k}={params[k]}' for k in params))
+    items = params.items() if hasattr(params, 'items') else list(params)
+    return urlencode(sorted(items), doseq=True)
 
 def parse_bool(value):
     if isinstance(value, bool):

@@ -2,7 +2,8 @@ import hashlib
 import json
 
 def request_id(method, path, body):
-    payload = json.dumps(body) if body is not None else ''
+    payload = json.dumps(body, sort_keys=True, separators=(',', ':'),
+                         ensure_ascii=False) if body is not None else ''
     return hashlib.sha256(f'{method}:{path}:{payload}'.encode()).hexdigest()[:24]
 
 def page_bounds(page, size, total):
